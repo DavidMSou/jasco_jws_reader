@@ -1,7 +1,7 @@
 #Works only on python 2+due to OleFileIO_PL module
-from tkFileDialog import askdirectory,askopenfilenames
+from tkinter.filedialog import askdirectory,askopenfilenames
 from os import chdir, listdir
-import OleFileIO_PL as ofio
+import olefile as ofio # pip3 install olefile
 from struct import unpack
 
 
@@ -73,7 +73,7 @@ def convert_jws_to_csv(filename):
         # print(oleobj.openstream('Y-Data').read())
         fmt = 'f' * header_obj.point_number*header_obj.channel_number
         values = unpack(fmt, oleobj.openstream('Y-Data').read())
-        chunks = [values[x:x + header_obj.point_number] for x in xrange(0, len(values), header_obj.point_number)]
+        chunks = [values[x:x + header_obj.point_number] for x in range(0, len(values), header_obj.point_number)]
 
         # print("len: %i*%i, %s" %(header_obj.point_number,header_obj.channel_number,chunks))
     with open(filename.rstrip("jws")+"csv","w") as r:
